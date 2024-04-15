@@ -12,6 +12,10 @@
 # database
 /prisma
 
+# products
+/products
+/public/products
+
 # next.js
 /.next/
 /out/
