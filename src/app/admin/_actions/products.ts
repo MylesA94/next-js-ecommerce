@@ -39,15 +39,14 @@ export async function addProduct(prevState: unknown, formData: FormData) {
     // convert file to buffer, take file from format to node js compatible format to make file.
     await fs.writeFile(`public${imagePath}`, Buffer.from(await data.image.arrayBuffer()))
 
-    db.product.create({ data: {
+    await db.product.create({ data: {
         isAvailableForPurchase: false,
         name: data.name,
         description: data.description,
         priceInCents: data.priceInCents,
         filePath,
         imagePath,
-    },})
+    }})
 
-    console.log('before redirect addProduct.')
     redirect("/admin/products")
 }

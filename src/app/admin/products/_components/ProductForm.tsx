@@ -12,6 +12,7 @@ import { addProduct } from "../../_actions/products"
 export function ProductForm() {
     const [error, action] = useFormState(addProduct, {})
     const [priceInCents, setPriceInCents] = useState<number>()
+    
     return (
     <form action={action} className="space-y-8">
         <div className="space-y-2">
