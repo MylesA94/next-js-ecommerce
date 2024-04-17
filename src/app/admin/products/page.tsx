@@ -6,6 +6,7 @@ import { db } from "@/db/db";
 import { XCircle, CheckCircle2, MoreVertical } from "lucide-react";
 import { formatCurrency, formatNumber } from "@/lib/formatters";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { ActiveToggleDropdownItem, DeleteDropdownItem } from "./_components/ProductActions";
 
 export default function AdminProductsPage() {
     return (
@@ -57,12 +58,12 @@ async function ProductsTable(){
                         <TableCell>
                             {product.isAvailableForPurchase ? (
                             <>
-                            <CheckCircle2 />
+                            <CheckCircle2 className="stroke-green-500" />
                             <span className="sr-only">Available</span>
                             </>
                         ) : (
                             <>
-                            <XCircle />
+                            <XCircle className="stroke-destructive"/>
                             <span className="sr-only">Unavailable</span>
                             </>
                         )}
@@ -77,9 +78,14 @@ async function ProductsTable(){
                             <span className="sr-only">Actions</span>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
-                                <DropdownMenuItem>
+                                <DropdownMenuItem asChild>
                                     <a download href={`/admin/products/${product.id}/download`}>Download</a>
                                 </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href={`/admin/products/${product.id}/edit`}>Edit</Link>
+                                </DropdownMenuItem>
+                                <ActiveToggleDropdownItem id={product.id} isAvailableForPurchase={product.isAvailableForPurchase}/>
+                                <DeleteDropdownItem id={product.id} disabled={product._count.orders > 0} />
                             </DropdownMenuContent>
                             </DropdownMenu>
                         </TableCell>
