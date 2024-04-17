@@ -12,7 +12,7 @@ import { Product } from "@prisma/client"
 import Image from "next/image"
 
 export function ProductForm({ product }: { product?: Product | null }) {
-    const [error, action] = useFormState(product === null ? addProduct : updateProduct.bind(null, product.id), {})
+    const [error, action] = useFormState(product === null ? addProduct : updateProduct.bind(null, product?.id), {})
     const [priceInCents, setPriceInCents] = useState<number | undefined>(product?.priceInCents)
 
     return (

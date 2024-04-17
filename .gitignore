@@ -12,6 +12,9 @@
 # database
 /prisma
 
+# environment variables
+.env
+
 # products
 /products
 /public/products
