@@ -1,29 +1,43 @@
 import { ProductCard, ProductCardSkeleton } from "@/components/ProductCard"
 import { Button } from "@/components/ui/button"
 import { db } from "@/db/db"
-import { Product } from "@prisma/client"
+import { cache } from "@/lib/cache"
+import { PrismaPromise, Product } from "@prisma/client"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { Suspense } from "react"
 
-async function getMostPopularProducts() {
+const DAY = 60 * 60 * 24
+
+const getMostPopularProducts = cache(() => {
     return db.product.findMany({
         where: { isAvailableForPurchase: true },
         orderBy: { orders: { _count: "desc"} },
         take: 6
     })
-}
+}, ["/","getMostPopularProducts"], {revalidate: DAY })
 
-async function getNewestProducts() {
+const getNewestProducts = cache(() => {
     return db.product.findMany({
         where: { isAvailableForPurchase: true },
         orderBy: { createdAt: "desc" },
         take: 6
     })
-}
+},["/","getNewestProducts"], { revalidate: DAY })
 
+// Generic async wait function for adding timeout.
 function wait(duration: number) {
     return new Promise(resolve => setTimeout(resolve,duration))
+}
+
+async function ProductSuspense({
+    productsFetcher,
+}: {
+    productsFetcher: () => Promise<Product []>
+}) {
+    return (await productsFetcher()).map((product: Product) => (
+        <ProductCard key={product.id} {...product} />      
+    ))
 }
 
  type ProductGridSectionProps = {
@@ -31,7 +45,7 @@ function wait(duration: number) {
     productsFetcher: () => Promise<Product[]>
  }
 
-function ProductGridSection ({productsFetcher, title}: ProductGridSectionProps) {
+function ProductGridSection ({title, productsFetcher}: ProductGridSectionProps) {
     return (
     <div className="space-y-4">
         <div className="flex gap-4">
@@ -51,28 +65,18 @@ function ProductGridSection ({productsFetcher, title}: ProductGridSectionProps) 
                 <ProductCardSkeleton />
             </>
             }>
-                <ProductSuspense productsFetcher={productsFetcher}/>
+                <ProductSuspense productsFetcher={productsFetcher} />
             </Suspense>
         </div>
     </div>
     )
 }
 
-async function ProductSuspense({
-    productsFetcher,
-}: {
-    productsFetcher: () => Promise<Product []>
-}) {
-    return (await productsFetcher()).map((product: Product) => (
-        <ProductCard key={product.id} {...product} />      
-    ))
-}
-
 export default function HomePage() {
     return (
     <main className="space-y-12">
-        <ProductGridSection title="Most Popular" productsFetcher={getMostPopularProducts}/>
-        <ProductGridSection title="Newest" productsFetcher={getNewestProducts}/>
+        <ProductGridSection title="Most Popular" productsFetcher={getMostPopularProducts} />
+        <ProductGridSection title="Newest" productsFetcher={getNewestProducts} />
     </main>
     )
 }  

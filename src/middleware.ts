@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isValidPassword } from "./lib/isValidPassword";
 
+/*
+ *
+ * Check if user is authenticated for admin use
+ * @param req {NextRequest} - request to be authenticated
+ * 
+ */
 export async function middleware(req: NextRequest) {
     if (await isAuthenticated(req) === false) {
         return new NextResponse("Unauthorized", { status: 401,
@@ -8,6 +14,12 @@ export async function middleware(req: NextRequest) {
     }
 }
 
+/*
+ *Check if user is authenticated for admin use
+ *
+ * @param {NextRequest} req - request to be authenticated
+ * @return {boolean}
+ */
 async function isAuthenticated(req: NextRequest) {
     const authHeader = req.headers.get("authorization") || req.headers.get("Authorization")
     if(authHeader === null) return false
