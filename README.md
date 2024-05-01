@@ -1,5 +1,8 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+Ecommerce project video
+https://youtu.be/iqrgggs0Qk0?si=OkBoUr-U89fde7BF&t=12003
+
 ## Getting Started
 
 First, run the development server:
@@ -13,6 +16,12 @@ pnpm dev
 # or
 bun dev
 ```
+
+run stripe server
+run cmd - stripe listen --forward-to localhost:3000/webhooks/stripe
+
+run email server - in git bash terminal
+npm run email -> package.js script loads email server on http://localhost:3001 server.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

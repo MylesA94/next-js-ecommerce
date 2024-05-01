@@ -36,7 +36,7 @@ export async function addProduct(prevState: unknown, formData: FormData) {
     await fs.writeFile(filePath, Buffer.from(await data.file.arrayBuffer()))
 
     await fs.mkdir("public/products", {recursive: true})
-    const imagePath = `/products/${crypto.randomUUID()}-${data.file.name}`
+    const imagePath = `/products/${crypto.randomUUID()}-${data.image.name}`
     // convert file to buffer, take file from format to node js compatible format to make file.
     await fs.writeFile(`public${imagePath}`, Buffer.from(await data.image.arrayBuffer()))
 
