@@ -33,14 +33,15 @@ function Form({priceInCents, productId}: {priceInCents: number, productId: strin
         return
     }
 
+    console.log(`${process.env.NEXT_PUBLIC_SERVER_URL}/stripe/purchase-success`)
     stripe.confirmPayment({ elements, confirmParams: {
         return_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/stripe/purchase-success`
     }}).then(({ error }) => {
-        if(error.type === "card_error" || error.type === "validation_error") {
+        // if(error.type === "card_error" || error.type === "validation_error") {
             setErrorMessage(error.message)
-        } else {
-            setErrorMessage("An unknown error occurred")
-        }
+        // } else {
+        //     setErrorMessage("An unknown error occurred")
+        // }
     }).finally(() => setIsLoading(false))
  }
 

@@ -1,11 +1,9 @@
-import { Button } from "@/components/ui/button";
 import { PageHeader } from "../_components/PageHeader";
-import Link from "next/link";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { db } from "@/db/db";
-import { XCircle, CheckCircle2, MoreVertical, User } from "lucide-react";
+import { MoreVertical } from "lucide-react";
 import { formatCurrency, formatNumber } from "@/lib/formatters";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { DeleteDropdownItem } from "./_components/UserActions";
 
 function getUsers() {
