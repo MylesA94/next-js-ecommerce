@@ -1,7 +1,5 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-Ecommerce project video
-https://youtu.be/iqrgggs0Qk0?si=OkBoUr-U89fde7BF&t=12003
 
 ## Getting Started
 
