@@ -18,7 +18,7 @@ bun dev
 run stripe server
 run cmd - stripe listen --forward-to localhost:3000/webhooks/stripe
 
-run email server - in git bash terminal
+run email server - in bash terminal
 npm run email -> package.js script loads email server on http://localhost:3001 server.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
